@@ -1,3 +1,4 @@
 class Repair < ApplicationRecord
-  belong_to: :users
+  belongs_to :user
+  validates :year, :make, :model, :repairname, :repaircost, presence: true
 end

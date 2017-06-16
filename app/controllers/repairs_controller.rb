@@ -1,4 +1,4 @@
-class RepairsController < ApplicationController
+class RepairsController < ProtectedController
   before_action :set_repair, only: [:show, :update, :destroy]
   before_action :validate_user
   # GET /repairs
