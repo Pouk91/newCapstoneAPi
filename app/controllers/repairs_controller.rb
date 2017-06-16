@@ -1,9 +1,9 @@
 class RepairsController < ApplicationController
   before_action :set_repair, only: [:show, :update, :destroy]
-
+  before_action :validate_user
   # GET /repairs
   def index
-    @repairs = Repair.all
+    @repairs = current_user.repairs.all
 
     render json: @repairs
   end
@@ -15,7 +15,7 @@ class RepairsController < ApplicationController
 
   # POST /repairs
   def create
-    @repair = Repair.new(repair_params)
+    @repair = current_user.repairs.build(repair_params)
 
     if @repair.save
       render json: @repair, status: :created, location: @repair
@@ -39,9 +39,14 @@ class RepairsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_repair
-      @repair = Repair.find(params[:id])
+      @repair = current_user.repairs.find(params[:id])
+    end
+
+    def validate_user
+      set_current_user
     end
 
     # Only allow a trusted parameter "white list" through.
